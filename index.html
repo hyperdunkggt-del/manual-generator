@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>操作手册生成器 - 专业版</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Toast 容器 -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- 加载遮罩 -->
+  <div id="loadingOverlay" class="loading-overlay">
+    <div class="loading-spinner"></div>
+    <p class="loading-text">处理中...</p>
+  </div>
+
+  <div class="app">
+    <!-- 头部 -->
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">📋</div>
+        <div>
+          <h1>操作手册生成器</h1>
+          <p class="subtitle">填写步骤与图片,一键生成专业操作流程手册 · 支持导出 Word / HTML / Markdown</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- 手册基本信息 -->
+    <section class="card">
+      <h2 class="section-title">
+        <span class="icon">📄</span>
+        手册基本信息
+      </h2>
+
+      <div class="form-grid">
+        <div class="form-row full">
+          <label>手册标题</label>
+          <input type="text" id="manualTitle" placeholder="例如:办公系统操作指南" autocomplete="off">
+        </div>
+
+        <div class="form-row full">
+          <label>手册说明</label>
+          <textarea id="manualDesc" placeholder="简要说明本手册的用途和适用范围..." rows="2"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label>作者</label>
+          <input type="text" id="manualAuthor" placeholder="例如:技术部" autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <label>版本号</label>
+          <input type="text" id="manualVersion" placeholder="例如:v1.0" autocomplete="off">
+        </div>
+
+        <div class="form-row">
+          <label>更新日期</label>
+          <input type="date" id="manualDate" autocomplete="off">
+        </div>
+
+        <div class="form-row full">
+          <button type="button" id="loadSample" class="btn btn-ghost">
+            <span class="btn-icon">📌</span>
+            加载示例手册
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 操作步骤 -->
+    <section class="card">
+      <div class="section-header">
+        <h2 class="section-title">
+          <span class="icon">📝</span>
+          操作步骤
+          <span id="stepCount" class="step-count">(0)</span>
+        </h2>
+
+        <div class="section-actions">
+          <button type="button" id="expandAll" class="btn btn-ghost btn-sm">收起全部</button>
+          <button type="button" id="addStep" class="btn btn-primary">
+            <span class="btn-icon">+</span>
+            添加步骤
+          </button>
+        </div>
+      </div>
+
+      <div id="stepsContainer" class="steps-container">
+        <!-- 步骤卡片将动态生成在这里 -->
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">📝</div>
+          <p>还没有添加任何步骤</p>
+          <p class="empty-hint">点击上方「添加步骤」按钮开始创建你的操作手册</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 导出与预览 -->
+    <section class="card">
+      <h2 class="section-title">
+        <span class="icon">📤</span>
+        导出与预览
+      </h2>
+
+      <div class="export-buttons">
+        <button type="button" id="previewBtn" class="btn btn-preview btn-large">
+          <span class="btn-icon">👁</span>
+          预览手册
+        </button>
+        <button type="button" id="exportWord" class="btn btn-word btn-large">
+          <span class="btn-icon">📘</span>
+          导出 Word
+        </button>
+        <button type="button" id="exportHtml" class="btn btn-export btn-large">
+          <span class="btn-icon">📥</span>
+          导出 HTML
+        </button>
+        <button type="button" id="exportMarkdown" class="btn btn-export btn-large">
+          <span class="btn-icon">📝</span>
+          导出 Markdown
+        </button>
+        <button type="button" id="printBtn" class="btn btn-export btn-large">
+          <span class="btn-icon">🖨</span>
+          打印 PDF
+        </button>
+      </div>
+
+      <div class="data-buttons">
+        <button type="button" id="exportJson" class="btn btn-ghost">
+          <span class="btn-icon">💾</span>
+          导出模板   <!-- 这里改了 -->
+        </button>
+        <button type="button" id="importJson" class="btn btn-ghost">
+          <span class="btn-icon">📂</span>
+          导入模板   <!-- 这里改了 -->
+        </button>
+        <input type="file" id="jsonFileInput" accept=".json" style="display:none;">
+      </div>
+    </section>
+
+    <!-- 快捷键提示 -->
+    <div class="shortcuts-hint">
+      <strong>💡 快捷键：</strong>
+      Ctrl+S 自动保存 · Ctrl+P 预览 · Ctrl+Z 撤销
+    </div>
+  </div>
+
+  <!-- 预览弹窗 -->
+  <div id="previewModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>手册预览</h2>
+        <button id="closePreview" class="close-btn">×</button>
+      </div>
+      <div id="manualPreview" class="manual-preview"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
